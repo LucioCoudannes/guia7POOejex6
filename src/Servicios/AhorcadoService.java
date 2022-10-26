@@ -15,20 +15,16 @@ import java.util.Scanner;
 public class AhorcadoService {
     
     Scanner leer = new Scanner(System.in).useDelimiter("\n");
-     int contador =0;
+    
      
     
     public void crearJuego(Ahorcado p){
-        
-        
         
         System.out.println("ingrese la palabra para jugar");
         String palabra = leer.next();
         System.out.println("Ingrese la cantidad de intentos");
         p.setIntentos(leer.nextInt());
         p.setLetras(0);
-        
-        
         
         String[] pala2 = new String[palabra.length()];
         //Guarda la pabla en el array del objeto
@@ -37,16 +33,7 @@ public class AhorcadoService {
          p.setBuscada(pala2);
             
         }
-//        
-//        for (int i = 0; i < palabra.length(); i++) {
-//            
-//                  
-//            System.out.print(p.getBuscada()[i]);
-//           
-//        }
-        
-        
-        
+ 
     }
     
     public void longitud(Ahorcado l){
@@ -56,26 +43,26 @@ public class AhorcadoService {
         
     }
     
-    public void buscar(Ahorcado le){
+    public void buscar(Ahorcado le, String letra){
         
        
         
-        System.out.println("Ingrese letra a buscar");
-        String[] letra = new String[1];
-        letra[0]=leer.next();
+        
+        int contador1=0;
         
         for (int i = 0; i < le.getBuscada().length; i++) {
-            if(le.getBuscada()[i].equalsIgnoreCase(letra[0])){
-              contador++;
+            if(le.getBuscada()[i].equalsIgnoreCase(letra)){
+              contador1++;
               
 
             }
             
         }
         
-        if(contador>0){
+        if(contador1>0){
                 
-                System.out.println("se encontro la letra");
+             System.out.println("se encontro la letra");
+             le.setLetras(contador1+le.getLetras());
             }else {
             
             System.out.println("No se encontro la letra");
@@ -86,16 +73,26 @@ public class AhorcadoService {
         
     }
     
-    public Boolean encontradas(Ahorcado e){
+    public Boolean encontradas(Ahorcado e,String letra){
         
-        Boolean encontrada=true;
-       if (contador==0){
-           encontrada=false;
-            e.setIntentos(e.getIntentos()-1);
-       }else {
+        Boolean encontrada=false;
+        for (int i = 0; i < e.getBuscada().length; i++) {
+            if(e.getBuscada()[i].equalsIgnoreCase(letra)){
+              encontrada=true;
+              
+            }
+            
+        } 
+        
+       if (encontrada){
            
-           System.out.println("la letra se encontro " + contador + " veces");
-           System.out.println("le faltan " + (e.getBuscada().length-contador) + " letras");
+            
+            System.out.println("letras encontradas " + e.getLetras());
+           System.out.println("le faltan " + (e.getBuscada().length-e.getLetras()) + " letras");
+       }else {
+           e.setIntentos(e.getIntentos()-1);
+           System.out.println("letras encontradas " + e.getLetras());
+           System.out.println("le faltan " + (e.getBuscada().length-e.getLetras()) + " letras");
            }
         
         return encontrada;  
@@ -109,17 +106,25 @@ public class AhorcadoService {
     
     public void juego(Ahorcado j){
         
+       System.out.println("Ingrese letra a buscar");
        
+        String letra=leer.next();
        
-        this.buscar(j);
-        this.encontradas(j);
+        this.buscar(j, letra);
+        this.encontradas(j,letra);
         this.intentos(j);
-         if (contador==j.getBuscada().length){
-             
-             j.setIntentos(0);
+         if (j.getLetras()==j.getBuscada().length){
+          
              System.out.println("Encontro la palabra");
              
          }
+         if(j.getIntentos()==0){
+             
+             System.out.println("GAME OVER");
+             
+         }
+         
+         
        
     }
 }

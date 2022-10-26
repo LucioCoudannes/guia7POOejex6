@@ -27,7 +27,7 @@ public class Guia7POOEjex6 {
         
         do {
             as.juego(p1);
-        } while (p1.getIntentos()!=0);
+        } while (p1.getIntentos()!=0&&p1.getLetras()<p1.getBuscada().length);
         
         
         
